@@ -1,9 +1,11 @@
+import java.util.Arrays;
+
 /**
  * Array based storage for Resumes
  */
 public class ArrayStorage {
     Resume[] storage = new Resume[10000];
-    private static int size = 0;
+    private int size;
 
     /**
      * Assigns null value to all elements of the storage
@@ -22,20 +24,14 @@ public class ArrayStorage {
      * @param r - Resume to be saved
      */
     void save(Resume r) {
-        if (size == 0) {
-            storage[size] = r;
-            size++;
-        } else {
-            for (int i = 0; i < size; i++) {
-                if (storage[i].uuid.equals(r.uuid)) {
-                    System.out.println("Resume with uuid \"" + r.uuid + "\" is already exist");
-                    return;
-                }
+        for (int i = 0; i < size; i++) {
+            if (storage[i].uuid.equals(r.uuid)) {
+                System.out.println("Resume with uuid \"" + r.uuid + "\" is already exist");
+                return;
             }
-            storage[size] = r;
-            size++;
-            return;
         }
+        storage[size] = r;
+        size++;
     }
 
     /**
@@ -72,21 +68,18 @@ public class ArrayStorage {
         if (size == 0) {
             System.out.println("Storage is empty");
         } else {
-            int index = 0;
+            int index = -1;
             for (int i = 0; i < size; i++) {
-                index++;
                 if (storage[i].uuid.equals(uuid)) {
-                    Resume next = storage[index + 1];
-                    for (int j = index; j < size; ) {
-                        storage[j] = next;
-                        j++;
-                        next = storage[j + 1];
-                    }
-                    size--;
-                    return;
+                    index = i;
+                    break;
                 }
-                if (i == size - 1)
-                    System.out.println("Resume with uuid " + uuid + " not found");
+            }
+            if (index != -1) {
+                System.arraycopy(storage, index + 1, storage, index, size - index - 1);
+                size--;
+            } else {
+                System.out.println("Resume with uuid " + uuid + " not found");
             }
         }
     }
@@ -100,10 +93,7 @@ public class ArrayStorage {
             System.out.println("Storage is empty");
             allResumes = new Resume[0];
         } else {
-            allResumes = new Resume[size];
-            for (int i = 0; i < size; i++) {
-                allResumes[i] = storage[i];
-            }
+            allResumes = Arrays.copyOf(storage, size);
         }
         return allResumes;
     }
