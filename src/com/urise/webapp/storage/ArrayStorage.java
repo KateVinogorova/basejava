@@ -7,7 +7,7 @@ import java.util.Arrays;
  * Array based storage for Resumes
  */
 public class ArrayStorage {
-    Resume[] storage = new Resume[10000];
+    private Resume[] storage = new Resume[10_000];
     private int size;
 
     /**
@@ -19,85 +19,83 @@ public class ArrayStorage {
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(resume.getUuid())) {
                 storage[i] = resume;
-                System.out.println("Storage updated");
+                System.out.println("Resume updated");
                 return;
             }
         }
-        System.out.println("com.urise.webapp.model.Resume with uuid " + resume.getUuid() + " was not found");
+        System.out.println("Resume with uuid " + resume.getUuid() + " not found");
     }
 
     /**
      * Assigns null value to all elements of the storage
      */
     public void clear() {
-        for (int i = 0; i < size; i++) {
-            storage[i] = null;
-        }
+        Arrays.fill(storage, 0, size-1, null);
         size = 0;
     }
 
     /**
-     * Adds new com.urise.webapp.model.Resume to storage. If com.urise.webapp.model.Resume with this uuid already exists,
+     * Adds new Resume to storage. If Resume with this uuid already exists,
      * displays information about it and does not add an object
      *
-     * @param resume - com.urise.webapp.model.Resume to be saved
+     * @param resume - Resume to be saved
      */
     public void save(Resume resume) {
         if (size == storage.length) {
-            System.out.println("Storage overflow");
+            System.out.println("Storage overflow. Resume can not be saved.");
             return;
         }
-        if (!isExist(resume)) {
-            storage[size] = resume;
-            size++;
+        for (int i = 0; i < size; i++) {
+            if (storage[i].getUuid().equals(resume.getUuid())) {
+                System.out.println("Resume with uuid \"" + resume.getUuid() + "\" is already exist");
+                return;
+            }
         }
+                storage[size] = resume;
+                size++;
     }
 
     /**
-     * Searches for the com.urise.webapp.model.Resume with passed uuid and returns this com.urise.webapp.model.Resume if found.
-     * If com.urise.webapp.model.Resume with passed uuid doesn't exist, displays information about it.
+     * Searches for the Resume with passed uuid and returns this Resume if found.
+     * If Resume with passed uuid doesn't exist, displays information about it.
      *
      * @param uuid - unique String id
-     * @return com.urise.webapp.model.Resume with uuid equal to the passed parameter
+     * @return Resume with uuid equal to the passed parameter
      */
     public Resume get(String uuid) {
-        Resume targetResume = null;
-        if (!isEmpty()) {
             for (int i = 0; i < size; i++) {
                 if (storage[i].getUuid().equals(uuid)) {
                     return storage[i];
                 } else if (i == size - 1) {
-                    System.out.println("Uuid " + uuid + " was not found");
+                    System.out.println("Uuid " + uuid + " not found");
                 }
             }
-        }
-        return targetResume;
+        return null;
     }
 
     /**
-     * Deletes com.urise.webapp.model.Resume with passed uuid from storage and shifts the following elements after deleted by index - 1
-     * If com.urise.webapp.model.Resume with passed uuid doesn't exist, displays information about it and did not make any changes
+     * Deletes Resume with passed uuid from storage and shifts the following elements after deleted by index - 1
+     * If Resume with passed uuid doesn't exist, displays information about it and did not make any changes
      *
      * @param uuid - unique String id
      */
     public void delete(String uuid) {
-        if (!isEmpty() && isExist(uuid)) {
             int index = -1;
             for (int i = 0; i < size; i++) {
                 if (storage[i].getUuid().equals(uuid)) {
                     index = i;
                     break;
                 }
+                if (index != -1) {
+                    System.arraycopy(storage, index + 1, storage, index, size - index - 1);
+                    size--;
+                    System.out.println("Resume with uuid " + uuid + " deleted");
+                }
             }
-            if (index != -1) {
-                System.arraycopy(storage, index + 1, storage, index, size - index - 1);
-                size--;
-            }
-        }
     }
 
     /**
-     * @return array, contains only Resumes in storage (without null)
+     * @return array, which contains only Resumes in storage (without null)
      */
     public Resume[] getAll() {
         return Arrays.copyOf(storage, size);
@@ -108,48 +106,5 @@ public class ArrayStorage {
      */
     public int size() {
         return size;
-    }
-
-    /**
-     * Checks if com.urise.webapp.model.Resume is in storage
-     *
-     * @param resume
-     * @return true if resume is already exist, false - if resume is not found in storage
-     */
-    private boolean isExist(Resume resume) {
-        for (int i = 0; i < size; i++) {
-            if (storage[i].getUuid().equals(resume.getUuid())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Checks if com.urise.webapp.model.Resume is in storage
-     *
-     * @param uuid
-     * @return true if resume is already exist, false - if resume is not found in storage
-     */
-    private boolean isExist(String uuid) {
-        for (int i = 0; i < size; i++) {
-            if (storage[i].getUuid().equals(uuid)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Checks if the storage is empty
-     *
-     * @return true if storage is empty, false - id storage has one or more element
-     */
-    private boolean isEmpty() {
-        if (size == 0) {
-            System.out.println("Storage is empty");
-            return true;
-        }
-        return false;
     }
 }
