@@ -11,6 +11,7 @@ public class Resume {
 
     /**
      * Returns uuid of the current Resume instance
+     *
      * @return
      */
     public String getUuid() {
@@ -19,6 +20,7 @@ public class Resume {
 
     /**
      * Sets uuid value for the current Resume instance
+     *
      * @param uuid
      */
     public void setUuid(String uuid) {
