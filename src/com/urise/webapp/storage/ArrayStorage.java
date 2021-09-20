@@ -7,9 +7,15 @@ import java.util.Arrays;
 /**
  * Array based storage for Resumes
  */
-public class ArrayStorage {
-    private Resume[] storage = new Resume[10_000];
-    private int size;
+public class ArrayStorage extends AbstractArrayStorage {
+
+    /**
+     * Assigns null value to all elements of the storage
+     */
+    public void clear() {
+        Arrays.fill(storage, 0, size, null);
+        size = 0;
+    }
 
     /**
      * Searches for the resume with the same uuid, updates if found
@@ -17,20 +23,12 @@ public class ArrayStorage {
      * @param resume
      */
     public void update(Resume resume) {
-        int index = indexOfResume(resume.getUuid());
-        if (index >= 0) {
-            storage[index] = resume;
-        } else {
+        int index = getIndex(resume.getUuid());
+        if (index == -1) {
             System.out.println("Resume with uuid " + resume.getUuid() + " not found");
+        } else {
+            storage[index] = resume;
         }
-    }
-
-    /**
-     * Assigns null value to all elements of the storage
-     */
-    public void clear() {
-        Arrays.fill(storage, 0, size - 1, null);
-        size = 0;
     }
 
     /**
@@ -40,31 +38,13 @@ public class ArrayStorage {
      * @param resume - Resume to be saved
      */
     public void save(Resume resume) {
-        if (size == storage.length) {
-            System.out.println("Storage overflow. Resume can not be saved.");
-            return;
-        } else if (indexOfResume(resume.getUuid()) >= 0) {
+        if (getIndex(resume.getUuid()) != -1) {
             System.out.println("Resume with uuid \"" + resume.getUuid() + "\" is already exist");
+        } else if (size >= STORAGE_LIMIT) {
+            System.out.println("Storage overflow. Resume can not be saved.");
         } else {
             storage[size] = resume;
             size++;
-        }
-    }
-
-    /**
-     * Searches for the Resume with passed uuid and returns this Resume if found.
-     * If Resume with passed uuid doesn't exist, displays information about it.
-     *
-     * @param uuid - unique String id
-     * @return Resume with uuid equal to the passed parameter
-     */
-    public Resume get(String uuid) {
-        int index = indexOfResume(uuid);
-        if (index >= 0) {
-            return storage[index];
-        } else {
-            System.out.println("Uuid " + uuid + " not found");
-            return null;
         }
     }
 
@@ -75,12 +55,13 @@ public class ArrayStorage {
      * @param uuid - unique String id
      */
     public void delete(String uuid) {
-        int index = indexOfResume(uuid);
-        if (index >= 0) {
-            System.arraycopy(storage, index + 1, storage, index, size - index - 1);
-            size--;
-        } else {
+        int index = getIndex(uuid);
+        if (index == -1) {
             System.out.println("Resume with uuid " + uuid + " not found");
+        } else {
+            storage[index] = storage[size - 1];
+            storage[size - 1] = null;
+            size--;
         }
     }
 
@@ -88,17 +69,10 @@ public class ArrayStorage {
      * @return array, which contains only Resumes in storage (without null)
      */
     public Resume[] getAll() {
-        return Arrays.copyOf(storage, size);
+        return Arrays.copyOfRange(storage, 0, size);
     }
 
-    /**
-     * @return number of not null storage elements
-     */
-    public int size() {
-        return size;
-    }
-
-    private int indexOfResume(String uuid) {
+    protected int getIndex(String uuid) {
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuid)) {
                 return i;
