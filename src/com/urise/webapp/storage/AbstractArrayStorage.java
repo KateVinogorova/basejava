@@ -26,7 +26,7 @@ abstract class AbstractArrayStorage implements Storage {
      * Assigns null value to all elements of the storage
      */
     @Override
-    public void clear() {
+    public final void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
     }
@@ -39,7 +39,7 @@ abstract class AbstractArrayStorage implements Storage {
      * @return Resume with uuid equal to the passed parameter
      */
     @Override
-    public Resume get(String uuid) {
+    public final Resume get(String uuid) {
         int index = getIndex(uuid);
         if (index < 0) {
             System.out.println("Uuid " + uuid + " not found");
@@ -66,5 +66,58 @@ abstract class AbstractArrayStorage implements Storage {
         return size;
     }
 
+    /**
+     * Adds new Resume to storage. If Resume with this uuid already exists,
+     * displays information about it and does not add an object
+     *
+     * @param resume - Resume to be saved
+     */
+    @Override
+    public final void save (Resume resume) {
+        String uuid = resume.getUuid();
+        int index = getIndex(uuid);
+        if (index >= 0) {
+            System.out.println("Resume with uuid \"" + uuid + "\" is already exist");
+        }
+        if (size >= STORAGE_LIMIT) {
+            System.out.println("Storage overflow. Resume can not be saved.");
+        }
+        else {
+            saveResume(resume, index);
+            size++;
+        }
+    }
+
+    /**
+     * Deletes Resume with passed uuid from storage and shifts the following elements
+     * after deleted by index - 1
+     * If Resume with passed uuid doesn't exist,
+     * displays information about it and did not make any changes
+     *
+     * @param uuid - unique String id
+     */
+    @Override
+    public final void delete (String uuid) {
+        int index = getIndex(uuid);
+        if (index < 0) {
+            System.out.println("Resume with uuid " + uuid + " not found");
+        }
+        deleteResume(index);
+        size--;
+    }
+
+    /**
+     * Adds new Resume to storage. If Resume with this uuid already exists,
+     * displays information about it and does not add an object
+     *
+     * @param resume - Resume to be saved
+     * @param index - index for saving to sorted array
+     */
+    protected abstract void saveResume (Resume resume, int index);
+
+    protected abstract void deleteResume (int index);
+
     protected abstract int getIndex(String uuid);
+
+
 }
