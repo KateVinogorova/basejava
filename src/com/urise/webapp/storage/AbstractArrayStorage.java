@@ -13,7 +13,7 @@ abstract class AbstractArrayStorage implements Storage {
      * Searches for the resume with the same uuid, updates if found
      */
     @Override
-    public void update(Resume resume) {
+    public final void update(Resume resume) {
         int index = getIndex(resume.getUuid());
         if (index < 0) {
             System.out.println("Resume with uuid " + resume.getUuid() + " not found");
@@ -73,16 +73,14 @@ abstract class AbstractArrayStorage implements Storage {
      * @param resume - Resume to be saved
      */
     @Override
-    public final void save (Resume resume) {
-        String uuid = resume.getUuid();
-        int index = getIndex(uuid);
+    public final void save(Resume resume) {
+        int index = getIndex(resume.getUuid());
         if (index >= 0) {
-            System.out.println("Resume with uuid \"" + uuid + "\" is already exist");
+            System.out.println("Resume with uuid \"" + resume.getUuid() + "\" is already exist");
         }
         if (size >= STORAGE_LIMIT) {
             System.out.println("Storage overflow. Resume can not be saved.");
-        }
-        else {
+        } else {
             saveResume(resume, index);
             size++;
         }
@@ -97,25 +95,23 @@ abstract class AbstractArrayStorage implements Storage {
      * @param uuid - unique String id
      */
     @Override
-    public final void delete (String uuid) {
+    public final void delete(String uuid) {
         int index = getIndex(uuid);
         if (index < 0) {
             System.out.println("Resume with uuid " + uuid + " not found");
         }
         deleteResume(index);
+        storage[size - 1] = null;
         size--;
     }
 
     /**
-     * Adds new Resume to storage. If Resume with this uuid already exists,
-     * displays information about it and does not add an object
-     *
      * @param resume - Resume to be saved
-     * @param index - index for saving to sorted array
+     * @param index  - index for saving to sorted array
      */
-    protected abstract void saveResume (Resume resume, int index);
+    protected abstract void saveResume(Resume resume, int index);
 
-    protected abstract void deleteResume (int index);
+    protected abstract void deleteResume(int index);
 
     protected abstract int getIndex(String uuid);
 
