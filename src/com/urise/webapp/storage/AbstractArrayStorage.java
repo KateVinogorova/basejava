@@ -1,5 +1,8 @@
 package com.urise.webapp.storage;
 
+import com.urise.webapp.exception.ExistStorageException;
+import com.urise.webapp.exception.NotExistStorageException;
+import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 
 import java.util.Arrays;
@@ -16,7 +19,7 @@ abstract class AbstractArrayStorage implements Storage {
     public final void update(Resume resume) {
         int index = getIndex(resume.getUuid());
         if (index < 0) {
-            System.out.println("Resume with uuid " + resume.getUuid() + " not found");
+            throw new NotExistStorageException(resume.getUuid());
         } else {
             storage[index] = resume;
         }
@@ -42,8 +45,7 @@ abstract class AbstractArrayStorage implements Storage {
     public final Resume get(String uuid) {
         int index = getIndex(uuid);
         if (index < 0) {
-            System.out.println("Uuid " + uuid + " not found");
-            return null;
+            throw new NotExistStorageException(uuid);
         }
         return storage[index];
     }
@@ -76,10 +78,10 @@ abstract class AbstractArrayStorage implements Storage {
     public final void save(Resume resume) {
         int index = getIndex(resume.getUuid());
         if (index >= 0) {
-            System.out.println("Resume with uuid \"" + resume.getUuid() + "\" is already exist");
+            throw new ExistStorageException(resume.getUuid());
         }
         if (size >= STORAGE_LIMIT) {
-            System.out.println("Storage overflow. Resume can not be saved.");
+            throw new StorageException("Storage overflow. Resume can not be saved.", resume.getUuid());
         } else {
             saveResume(resume, index);
             size++;
@@ -98,7 +100,7 @@ abstract class AbstractArrayStorage implements Storage {
     public final void delete(String uuid) {
         int index = getIndex(uuid);
         if (index < 0) {
-            System.out.println("Resume with uuid " + uuid + " not found");
+            throw new NotExistStorageException(uuid);
         }
         deleteResume(index);
         storage[size - 1] = null;
@@ -114,6 +116,4 @@ abstract class AbstractArrayStorage implements Storage {
     protected abstract void deleteResume(int index);
 
     protected abstract int getIndex(String uuid);
-
-
 }
