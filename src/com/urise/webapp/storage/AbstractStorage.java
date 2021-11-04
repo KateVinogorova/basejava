@@ -30,7 +30,7 @@ abstract class AbstractStorage implements Storage {
         if (index >= 0) {
             throw new ExistStorageException(resume.getUuid());
         }
-        saveResume(resume);
+        saveResume(resume, index);
     }
 
     /**
@@ -77,7 +77,7 @@ abstract class AbstractStorage implements Storage {
 
     protected abstract void updateResume(Resume r, int index);
 
-    protected abstract void saveResume(Resume r);
+    protected abstract void saveResume(Resume r, int index);
 
     protected abstract Resume getResume(int index);
 }

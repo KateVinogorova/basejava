@@ -22,11 +22,11 @@ abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    public final void saveResume(Resume resume) {
+    public final void saveResume(Resume resume, int index) {
         if (size >= STORAGE_LIMIT) {
             throw new StorageException("Storage overflow. Resume can not be saved.", resume.getUuid());
         }
-        doSave(resume, size);
+        doSave(resume, index);
         size++;
     }
 
