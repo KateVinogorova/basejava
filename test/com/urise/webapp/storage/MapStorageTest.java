@@ -10,6 +10,7 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 public class MapStorageTest extends AbstractArrayStorageTest {
+
     public MapStorageTest() {
         super(new MapStorage());
     }

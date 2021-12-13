@@ -15,6 +15,30 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
+    protected void updateResume(Object searchKey, Resume resume) {
+        String key = (String) searchKey;
+        storage.replace(key, resume);
+    }
+
+    @Override
+    protected void saveResume(Object searchKey, Resume resume) {
+        String key = (String) searchKey;
+        storage.put(key, resume);
+    }
+
+    @Override
+    protected Resume getResume(Object searchKey) {
+        String key = (String) searchKey;
+        return storage.get(key);
+    }
+
+    @Override
+    protected void deleteResume(Object searchKey) {
+        String key = (String) searchKey;
+        storage.remove(key);
+    }
+
+    @Override
     public Resume[] getAll() {
         return storage.values().toArray(new Resume[0]);
     }
@@ -25,30 +49,13 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    protected int getResumeIndex(Resume searchKey) {
-        if (storage.containsValue(searchKey)) {
-            return 1;
-        }
-        return -1;
+    protected Object getResumeKey(Resume searchKey) {
+        return searchKey.getUuid();
     }
 
     @Override
-    protected void deleteResume(int index, String key) {
-        storage.remove(key);
+    protected boolean exist(Resume resumeToFind) {
+        return storage.containsValue(resumeToFind);
     }
 
-    @Override
-    protected void updateResume(Resume r, int index) {
-        storage.replace(r.getUuid(), r);
-    }
-
-    @Override
-    protected void saveResume(Resume r, int index) {
-        storage.put(r.getUuid(), r);
-    }
-
-    @Override
-    protected Resume getResume(int index, String key) {
-        return storage.get(key);
-    }
 }

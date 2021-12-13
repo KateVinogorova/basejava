@@ -9,13 +9,12 @@ abstract class AbstractStorage implements Storage {
     /**
      * Searches for the resume with the same uuid, updates if found
      *
-     * @param r - resume we want to insert into storage instead of the existing
+     * @param resume - resume we want to insert into storage instead of the existing
      */
     @Override
-    public void update(Resume r) {
-        int index = getIndex(r.getUuid());
-        if (index < 0) throw new NotExistStorageException(r.getUuid());
-        updateResume(r, index);
+    public void update(Resume resume) {
+        Object searchKey = getKeyNotExist(resume.getUuid());
+        updateResume(searchKey, resume);
     }
 
     /**
@@ -26,11 +25,8 @@ abstract class AbstractStorage implements Storage {
      */
     @Override
     public final void save(Resume resume) {
-        int index = getIndex(resume.getUuid());
-        if (index >= 0) {
-            throw new ExistStorageException(resume.getUuid());
-        }
-        saveResume(resume, index);
+        Object searchKey = getKeyExist(resume.getUuid());
+        saveResume(searchKey, resume);
     }
 
     /**
@@ -42,11 +38,8 @@ abstract class AbstractStorage implements Storage {
      */
     @Override
     public Resume get(String uuid) {
-        int index = getIndex(uuid);
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
-        }
-        return getResume(index, uuid);
+        Object searchKey = getKeyNotExist(uuid);
+        return getResume(searchKey);
     }
 
     /**
@@ -59,25 +52,36 @@ abstract class AbstractStorage implements Storage {
      */
     @Override
     public void delete(String uuid) {
-        int index = getIndex(uuid);
-        if (index < 0) {
+        Object searchKey = getKeyNotExist(uuid);
+        deleteResume(searchKey);
+    }
+
+    private Object getKeyExist(String uuid) {
+        Resume resumeToFind = new Resume(uuid);
+
+        if (exist(resumeToFind)) {
+            throw new ExistStorageException(uuid);
+        }
+        return getResumeKey(resumeToFind);
+    }
+
+    private Object getKeyNotExist(String uuid) {
+        Resume resumeToFind= new Resume(uuid);
+        if (!exist(resumeToFind)) {
             throw new NotExistStorageException(uuid);
         }
-        deleteResume(index, uuid);
+        return getResumeKey(resumeToFind);
     }
 
-    public final int getIndex(String uuid) {
-        Resume searchKey = new Resume(uuid);
-        return getResumeIndex(searchKey);
-    }
+    protected abstract void updateResume(Object searchKey, Resume resume);
 
-    protected abstract int getResumeIndex(Resume searchKey);
+    protected abstract void saveResume(Object searchKey, Resume resume);
 
-    protected abstract void deleteResume(int index, String key);
+    protected abstract void deleteResume(Object searchKey);
 
-    protected abstract void updateResume(Resume r, int index);
+    protected abstract Resume getResume(Object searchKey);
 
-    protected abstract void saveResume(Resume r, int index);
+    protected abstract Object getResumeKey(Resume resumeToFind);
 
-    protected abstract Resume getResume(int index, String key);
+    protected abstract boolean exist(Resume resumeToFind);
 }
