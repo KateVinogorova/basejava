@@ -65,8 +65,8 @@ abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean exist(Resume resumeToFind) {
-        return (int) getResumeKey(resumeToFind) >= 0;
+    protected boolean isExist(Object key) {
+        return (int) key >= 0;
     }
 
     protected abstract void doSave(Resume r, int index);

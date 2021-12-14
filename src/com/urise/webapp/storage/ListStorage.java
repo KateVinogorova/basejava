@@ -51,10 +51,7 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean exist(Resume resumeToFind) {
-        if (!storage.contains(resumeToFind)) {
-            return false;
-        }
-        return true;
+    protected boolean isExist(Object key) {
+        return (int) key >= 0;
     }
 }

@@ -54,8 +54,7 @@ public class MapStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean exist(Resume resumeToFind) {
-        return storage.containsValue(resumeToFind);
+    protected boolean isExist(Object key) {
+        return key != null;
     }
-
 }
