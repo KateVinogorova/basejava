@@ -57,8 +57,8 @@ abstract class AbstractStorage implements Storage {
     }
 
     private Object getKeyNotExist(String uuid) {
-        Resume resumeToFind = new Resume(uuid);
-        Object key = getResumeKey(resumeToFind);
+//        Resume resumeToFind = new Resume(uuid);
+        Object key = getResumeKey(uuid);
         if (isExist(key)) {
             throw new ExistStorageException(uuid);
         }
@@ -66,8 +66,8 @@ abstract class AbstractStorage implements Storage {
     }
 
     private Object getKeyExist(String uuid) {
-        Resume resumeToFind = new Resume(uuid);
-        Object key = getResumeKey(resumeToFind);
+//        Resume resumeToFind = new Resume(uuid);
+        Object key = getResumeKey(uuid);
         if (!isExist(key)) {
             throw new NotExistStorageException(uuid);
         }
@@ -82,7 +82,7 @@ abstract class AbstractStorage implements Storage {
 
     protected abstract Resume getResume(Object searchKey);
 
-    protected abstract Object getResumeKey(Resume resumeToFind);
+    protected abstract Object getResumeKey(String uuid);
 
     protected abstract boolean isExist(Object key);
 }
