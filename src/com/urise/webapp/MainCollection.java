@@ -2,18 +2,18 @@ package com.urise.webapp;
 
 import com.urise.webapp.model.Resume;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MainCollection {
     private static final String UUID_1 = "uuid1";
-    private static final Resume RESUME_1 = new Resume(UUID_1);
+    private static final Resume RESUME_1 = new Resume(UUID_1, "Peter Parker");
     private static final String UUID_2 = "uuid2";
-    private static final Resume RESUME_2 = new Resume(UUID_2);
+    private static final Resume RESUME_2 = new Resume(UUID_2, "Otto Octavius");
     private static final String UUID_3 = "uuid3";
-    private static final Resume RESUME_3 = new Resume(UUID_3);
-    private static final String UUID_4 = "uuid4";
-    private static final Resume RESUME_4 = new Resume(UUID_4);
+    private static final Resume RESUME_3 = new Resume(UUID_3, "Norman Osborn)");
 
     public static void main(String[] args) {
         Map<String, Resume> map = new HashMap<>();
@@ -24,5 +24,9 @@ public class MainCollection {
         for (Map.Entry<String, Resume> stringResumeEntry : map.entrySet()) {
             System.out.println(stringResumeEntry.getValue());
         }
+
+        List<Resume> resumes = Arrays.asList(RESUME_1, RESUME_2, RESUME_3);
+        resumes.remove(1);
+        System.out.println(resumes);
     }
 }

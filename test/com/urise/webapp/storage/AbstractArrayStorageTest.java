@@ -7,19 +7,23 @@ import com.urise.webapp.model.Resume;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 
 public abstract class AbstractArrayStorageTest {
     Storage storage;
     private static final String UUID_1 = "uuid1";
-    private static final Resume RESUME_1 = new Resume(UUID_1);
+    private static final Resume RESUME_1 = new Resume(UUID_1, "Otto Octavius");
     private static final String UUID_2 = "uuid2";
-    private static final Resume RESUME_2 = new Resume(UUID_2);
+    private static final Resume RESUME_2 = new Resume(UUID_2, "Norman Osborn");
     private static final String UUID_3 = "uuid3";
-    private static final Resume RESUME_3 = new Resume(UUID_3);
+    private static final Resume RESUME_3 = new Resume(UUID_3, "Peter Parker");
     private static final String UUID_4 = "uuid4";
-    private static final Resume RESUME_4 = new Resume(UUID_4);
+    private static final Resume RESUME_4 = new Resume(UUID_4, "Mary Jane Watson");
 
     public AbstractArrayStorageTest(Storage storage) {
         this.storage = storage;
@@ -35,14 +39,14 @@ public abstract class AbstractArrayStorageTest {
 
     @Test
     public void update() throws NotExistStorageException {
-        Resume newResume = new Resume(UUID_3);
+        Resume newResume = new Resume(UUID_3, "Harry Osborn");
         storage.update(newResume);
         assertEquals(newResume, storage.get(UUID_3));
     }
 
     @Test(expected = NotExistStorageException.class)
     public void updateNotExist() {
-        storage.update(new Resume("uuid5"));
+        storage.update(new Resume("uuid5", "Aunt May"));
     }
 
     @Test
@@ -62,13 +66,9 @@ public abstract class AbstractArrayStorageTest {
     }
 
     @Test
-    public void getAll() {
-        Resume[] testArray = new Resume[3];
-        testArray[0] = RESUME_1;
-        testArray[1] = RESUME_2;
-        testArray[2] = RESUME_3;
-
-        assertArrayEquals(testArray, storage.getAll());
+    public void getAllSorted() {
+        List<Resume> list = Arrays.asList(RESUME_2, RESUME_1, RESUME_3);
+        assertEquals(list, storage.getAllSorted());
         assertEquals(3, storage.size());
     }
 
@@ -86,7 +86,7 @@ public abstract class AbstractArrayStorageTest {
 
     @Test(expected = ExistStorageException.class)
     public void saveExist() {
-        storage.save(new Resume(UUID_1));
+        storage.save(new Resume(UUID_1, "Peter Parker"));
     }
 
     @Test(expected = StorageException.class)
