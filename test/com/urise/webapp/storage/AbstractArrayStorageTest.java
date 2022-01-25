@@ -93,12 +93,12 @@ public abstract class AbstractArrayStorageTest {
     public void saveOverflow() {
         for (int i = 3; i < AbstractArrayStorage.STORAGE_LIMIT; i++) {
             try {
-                storage.save(new Resume());
+                storage.save(new Resume(""));
             } catch (StorageException exception) {
                 fail("Exception is thrown before overflow");
             }
         }
-        storage.save(new Resume());
+        storage.save(new Resume(""));
     }
 
     @Test(expected = NotExistStorageException.class)
