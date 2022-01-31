@@ -3,28 +3,28 @@ package com.urise.webapp;
 import com.urise.webapp.model.*;
 
 import java.time.YearMonth;
-import java.util.Map;
 
+import static com.urise.webapp.model.ContactType.*;
 import static com.urise.webapp.model.SectionType.*;
 
 public class ResumeTestData {
     public static void main(String[] args) {
         Resume resume = new Resume("Григорий Кислин");
-        resume.addContact("Тел.: ", "+7(921) 855-0482", "");
-        resume.addContact("Skype: ", "grigory.kislin", "");
-        resume.addContact("Почта: ", "gkislin@yandex.ru", "");
-        resume.addContact("", "Профиль LinkedIn", "");
-        resume.addContact("", "Профиль GitHub", "");
-        resume.addContact("", "Профиль Stackoverflow", "");
-        resume.addContact("", "Домашняя страница", "");
+        resume.addContact(PHONE, "+7(921) 855-0482");
+        resume.addContact(SKYPE, "grigory.kislin");
+        resume.addContact(MAIL, "gkislin@yandex.ru");
+        resume.addContact(LINKEDIN, "");
+        resume.addContact(GITHUB, "");
+        resume.addContact(STACKOVERFLOW, "");
+        resume.addContact(WEBSITE, "");
 
         TextSection objective = new TextSection();
         objective.setDescription("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям");
-        resume.sections.put(OBJECTIVE, objective);
+        resume.addSection(OBJECTIVE, objective);
 
         TextSection personal = new TextSection();
         personal.setDescription("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры.");
-        resume.sections.put(PERSONAL, personal);
+        resume.addSection(PERSONAL, personal);
 
         ListSection achievement = new ListSection();
         achievement.addListItem("С 2013 года: разработка проектов \"Разработка Web приложения\",\"Java Enterprise\", " +
@@ -44,7 +44,7 @@ public class ResumeTestData {
                 "Реализация онлайн клиента для администрирования и мониторинга системы по JMX (Jython/ Django).");
         achievement.addListItem("Реализация протоколов по приему платежей всех основных платежных системы России " +
                 "(Cyberplat, Eport, Chronopay, Сбербанк), Белоруcсии(Erip, Osmp) и Никарагуа.");
-        resume.sections.put(ACHIEVEMENT, achievement);
+        resume.addSection(ACHIEVEMENT, achievement);
 
         ListSection qualification = new ListSection();
         qualification.addListItem("JEE AS: GlassFish (v2.1, v3), OC4J, JBoss, Tomcat, Jetty, WebLogic, WSO2");
@@ -69,9 +69,9 @@ public class ResumeTestData {
         qualification.addListItem("Отличное знание и опыт применения концепций ООП, SOA, шаблонов проектрирования, " +
                 "архитектурных шаблонов, UML, функционального программирования");
         qualification.addListItem("Родной русский, английский \"upper intermediate\"");
-        resume.sections.put(QUALIFICATIONS, qualification);
+        resume.addSection(QUALIFICATIONS, qualification);
 
-        ExperienceStorage experienceStorage = new ExperienceStorage();
+        OrganizationSection experienceStorage = new OrganizationSection();
 
         Experience javaOnlineProjects = new Experience();
         javaOnlineProjects.setPlace("Java Online Projects");
@@ -147,9 +147,9 @@ public class ResumeTestData {
         alcatel.setDescription("Тестирование, отладка, внедрение ПО цифровой телефонной станции Alcatel 1000 S12 (CHILL, ASM).");
         experienceStorage.addExperience(alcatel);
 
-        resume.sections.put(EXPERIENCE, experienceStorage);
+        resume.addSection(EXPERIENCE, experienceStorage);
 
-        ExperienceStorage educationStorage = new ExperienceStorage();
+        OrganizationSection educationStorage = new OrganizationSection();
 
         Experience coursera = new Experience();
         coursera.setPlace("Coursera");
@@ -187,18 +187,21 @@ public class ResumeTestData {
         university1.setTitle("Инженер (программист Fortran, C)");
         educationStorage.addExperience(university1);
 
-        resume.sections.put(EDUCATION, educationStorage);
+        resume.addSection(EDUCATION, educationStorage);
 
 
         System.out.println(resume.getFullName());
         System.out.println("");
-        resume.printContacts();
+        for (ContactType type : ContactType.values()) {
+            System.out.print(type.getTitle(type) + " ");
+            System.out.println(resume.getContact(type));
+        }
         System.out.println("");
-        for (Map.Entry<SectionType, Section> s : resume.sections.entrySet()) {
+        for (SectionType type : SectionType.values()) {
             System.out.println("");
-            System.out.println(s.getKey());
+            System.out.println(type);
             System.out.println("");
-            s.getValue().printSection();
+            System.out.println(resume.getSection(type));
         }
     }
 }

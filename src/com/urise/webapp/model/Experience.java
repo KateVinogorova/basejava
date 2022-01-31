@@ -63,8 +63,8 @@ public class Experience {
     @Override
     public String toString() {
         if (description != null) {
-            return dateFrom + " - " + dateTo + "\n" + title + "\n" + description + "\n";
+            return place + "\n" + dateFrom + " - " + dateTo + "\n" + title + "\n" + description + "\n\n";
         }
-        return dateFrom + " - " + dateTo + "\n" + title + "\n";
+        return place + "\n" + dateFrom + " - " + dateTo + "\n" + title + "\n\n";
     }
 }

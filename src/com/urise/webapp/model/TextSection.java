@@ -1,6 +1,6 @@
 package com.urise.webapp.model;
 
-public class TextSection extends Section {
+public class TextSection extends AbstractSection {
     private String description;
 
     public void setDescription(String description) {
@@ -12,7 +12,7 @@ public class TextSection extends Section {
     }
 
     @Override
-    public void printSection() {
-        System.out.println(description);
+    public String toString() {
+        return description;
     }
 }
