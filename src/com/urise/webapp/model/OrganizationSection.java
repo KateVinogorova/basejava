@@ -14,15 +14,6 @@ public class OrganizationSection extends AbstractSection {
         experienceList.add(experience);
     }
 
-    public void updateExperience(Experience experience) {
-        int index = experienceList.indexOf(experience);
-        if (index >= 0) experienceList.set(index, experience);
-    }
-
-    public void deleteExperience(Experience experience) {
-        experienceList.remove(experience);
-    }
-
     @Override
     public String toString() {
         return experienceList.toString();

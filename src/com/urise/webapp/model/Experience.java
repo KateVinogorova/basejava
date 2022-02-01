@@ -8,6 +8,7 @@ public class Experience {
     private YearMonth dateTo;
     private String title;
     private String description;
+    Link website;
 
     public String getPlace() {
         return place;
@@ -62,9 +63,6 @@ public class Experience {
 
     @Override
     public String toString() {
-        if (description != null) {
-            return place + "\n" + dateFrom + " - " + dateTo + "\n" + title + "\n" + description + "\n\n";
-        }
-        return place + "\n" + dateFrom + " - " + dateTo + "\n" + title + "\n\n";
+        return place + "\n" + dateFrom + " - " + dateTo + "\n" + title + "\n" + description + "\n\n";
     }
 }

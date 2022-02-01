@@ -10,7 +10,7 @@ public class Resume {
 
     private final String uuid;
     private String fullName;
-    private Map<ContactType, String> contacts;
+    private Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
     private Map<SectionType, AbstractSection> sections = new EnumMap<>(SectionType.class);
 
     public Resume(String fullName) {
@@ -31,7 +31,6 @@ public class Resume {
     }
 
     public void addContact(ContactType type, String value) {
-        if (contacts == null) contacts = new EnumMap<>(ContactType.class);
         contacts.put(type, value);
     }
 
@@ -52,7 +51,8 @@ public class Resume {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Resume resume = (Resume) o;
-        return Objects.equals(uuid, resume.getUuid()) && Objects.equals(fullName, resume.getFullName()) && Objects.equals(contacts, resume.contacts) && Objects.equals(sections, resume.sections);
+        return Objects.equals(uuid, resume.getUuid()) && Objects.equals(fullName, resume.getFullName())
+                && Objects.equals(contacts, resume.contacts) && Objects.equals(sections, resume.sections);
     }
 
     @Override
