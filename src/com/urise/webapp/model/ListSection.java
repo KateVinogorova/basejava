@@ -1,7 +1,6 @@
 package com.urise.webapp.model;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ListSection extends AbstractSection {
@@ -19,9 +18,11 @@ public class ListSection extends AbstractSection {
         return sectionData;
     }
 
-
     @Override
     public String toString() {
-        return Arrays.toString(sectionData.toArray());
+        for (String s : sectionData) {
+            System.out.println(" - " + s);
+        }
+        return "";
     }
 }

@@ -1,6 +1,7 @@
 package com.urise.webapp.model;
 
 import java.time.YearMonth;
+import java.util.Objects;
 
 public class Experience {
     private String place;
@@ -48,21 +49,26 @@ public class Experience {
     }
 
     @Override
-    public int hashCode() {
-        return place.hashCode();
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Experience that = (Experience) o;
+        return Objects.equals(place, that.getPlace()) && Objects.equals(dateFrom, that.getDateFrom())
+                && Objects.equals(dateTo, that.getDateTo()) && Objects.equals(title, that.getTitle())
+                && description.equals(that.getDescription()) && Objects.equals(website, that.website);
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof Experience) {
-            return place.equals(((Experience) obj).getPlace()) && dateFrom.equals(((Experience) obj).getDateFrom())
-                    && dateTo.equals(((Experience) obj).getDateTo());
-        }
-        return false;
+    public int hashCode() {
+        return Objects.hash(place, dateFrom, dateTo, title, description, website);
     }
 
     @Override
     public String toString() {
-        return place + "\n" + dateFrom + " - " + dateTo + "\n" + title + "\n" + description + "\n\n";
+        String output = place + "\n" + dateFrom + " - " + dateTo + "\n" + title + "\n";
+        if (description != null) {
+            output += description + "\n";
+        }
+        return output;
     }
 }

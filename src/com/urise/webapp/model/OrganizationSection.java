@@ -16,6 +16,9 @@ public class OrganizationSection extends AbstractSection {
 
     @Override
     public String toString() {
-        return experienceList.toString();
+        for (Experience exp : experienceList) {
+            System.out.println(exp.toString());
+        }
+        return "";
     }
 }
