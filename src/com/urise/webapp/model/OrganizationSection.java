@@ -1,23 +1,31 @@
 package com.urise.webapp.model;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class OrganizationSection extends AbstractSection {
 
-    private List<Experience> experienceList;
+    private final Map<Organization, List<Position>> positions = new HashMap<>();
 
-    public OrganizationSection() {
-        experienceList = new ArrayList<>();
-    }
-
-    public void addExperience(Experience experience) {
-        experienceList.add(experience);
+    public void addOrganisation(Organization organization, Position position) {
+        if (positions.containsKey(organization)) {
+            positions.get(organization).add(position);
+        } else {
+            List<Position> list = new ArrayList<>();
+            list.add(position);
+            positions.put(organization, list);
+        }
     }
 
     @Override
     public String toString() {
-        for (Experience exp : experienceList) {
-            System.out.println(exp.toString());
+        for (Map.Entry<Organization, List<Position>> entry : positions.entrySet()) {
+            System.out.println(entry.getKey());
+            for (Position position : entry.getValue()) {
+                System.out.println(position);
+            }
         }
         return "";
     }

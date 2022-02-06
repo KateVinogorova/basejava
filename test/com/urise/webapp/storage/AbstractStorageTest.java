@@ -1,5 +1,6 @@
 package com.urise.webapp.storage;
 
+import com.urise.webapp.ResumeTestData;
 import com.urise.webapp.exception.ExistStorageException;
 import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.exception.StorageException;
@@ -16,13 +17,13 @@ import static org.junit.Assert.assertEquals;
 public abstract class AbstractStorageTest {
     Storage storage;
     private static final String UUID_1 = "uuid1";
-    private static final Resume RESUME_1 = new Resume(UUID_1, "Otto Octavius");
+    private static final Resume RESUME_1 = ResumeTestData.createResume(UUID_1, "Otto Octavius");
     private static final String UUID_2 = "uuid2";
-    private static final Resume RESUME_2 = new Resume(UUID_2, "Norman Osborn");
+    private static final Resume RESUME_2 = ResumeTestData.createResume(UUID_2, "Norman Osborn");
     private static final String UUID_3 = "uuid3";
-    private static final Resume RESUME_3 = new Resume(UUID_3, "Peter Parker");
+    private static final Resume RESUME_3 = ResumeTestData.createResume(UUID_3, "Peter Parker");
     private static final String UUID_4 = "uuid4";
-    private static final Resume RESUME_4 = new Resume(UUID_4, "Mary Jane Watson");
+    private static final Resume RESUME_4 = ResumeTestData.createResume(UUID_4, "Mary Jane Watson");
 
     protected AbstractStorageTest(Storage storage) {
         this.storage = storage;
@@ -38,14 +39,14 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void update() throws NotExistStorageException {
-        Resume newResume = new Resume(UUID_3, "Harry Osborn");
+        Resume newResume = ResumeTestData.createResume(UUID_3, "Harry Osborn");
         storage.update(newResume);
         assertEquals(newResume, storage.get(UUID_3));
     }
 
     @Test(expected = NotExistStorageException.class)
     public void updateNotExist() {
-        storage.update(new Resume("uuid5", "Aunt May"));
+        storage.update(ResumeTestData.createResume("uuid5", "Aunt May"));
     }
 
     @Test
@@ -85,7 +86,7 @@ public abstract class AbstractStorageTest {
 
     @Test(expected = ExistStorageException.class)
     public void saveExist() {
-        storage.save(new Resume(UUID_1, "Peter Parker"));
+        storage.save(ResumeTestData.createResume(UUID_1, "Peter Parker"));
     }
 
     @Test(expected = NotExistStorageException.class)

@@ -8,8 +8,10 @@ import static com.urise.webapp.model.ContactType.*;
 import static com.urise.webapp.model.SectionType.*;
 
 public class ResumeTestData {
-    public static void main(String[] args) {
-        Resume resume = new Resume("Григорий Кислин");
+
+    public static Resume createResume(String uuid, String fullName) {
+        Resume resume = new Resume(uuid, fullName);
+
         resume.addContact(PHONE, "+7(921) 855-0482");
         resume.addContact(SKYPE, "grigory.kislin");
         resume.addContact(MAIL, "gkislin@yandex.ru");
@@ -72,136 +74,109 @@ public class ResumeTestData {
         resume.addSection(QUALIFICATIONS, qualification);
 
         OrganizationSection experienceStorage = new OrganizationSection();
+        Organization javaOnlineProjects = new Organization("Java Online Projects");
+        Position javaOnlineProjectsPosition = new Position.Builder().dateFrom(YearMonth.of(2013, 10))
+                .dateTo(YearMonth.now()).title("Автор проекта.").description("Создание, организация и проведение " +
+                        "Java онлайн проектов и стажировок.").build();
+        experienceStorage.addOrganisation(javaOnlineProjects, javaOnlineProjectsPosition);
 
-        Experience javaOnlineProjects = new Experience();
-        javaOnlineProjects.setPlace("Java Online Projects");
-        javaOnlineProjects.setDates(YearMonth.of(2013, 10), YearMonth.now());
-        javaOnlineProjects.setTitle("Автор проекта.");
-        javaOnlineProjects.setDescription("Создание, организация и проведение Java онлайн проектов и стажировок.");
-        experienceStorage.addExperience(javaOnlineProjects);
+        Organization wrike = new Organization("Wrike");
+        Position wrikePosition = new Position.Builder().dateFrom(YearMonth.of(2014, 10)).
+                dateTo(YearMonth.of(2016, 1)).title("Старший разработчик (backend)").
+                description("Проектирование и разработка онлайн платформы управления проектами Wrike " + "" +
+                        "(Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). " +
+                        "Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.").build();
+        experienceStorage.addOrganisation(wrike, wrikePosition);
 
-        Experience wrike = new Experience();
-        wrike.setPlace("Wrike");
-        wrike.setDates(YearMonth.of(2014, 10), YearMonth.of(2016, 1));
-        wrike.setTitle("Старший разработчик (backend)");
-        wrike.setDescription("Проектирование и разработка онлайн платформы управления проектами Wrike " + "" +
-                "(Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). " +
-                "Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.");
-        experienceStorage.addExperience(wrike);
+        Organization RITCenter = new Organization("RIT Center");
+        Position RITCenterPosition = new Position.Builder().dateFrom(YearMonth.of(2012, 4)).
+                dateTo(YearMonth.of(2014, 10)).title("Java архитектор").
+                description("Организация процесса разработки системы ERP для разных окружений: релизная политика, " +
+                        "версионирование, ведение CI (Jenkins), миграция базы (кастомизация Flyway), " +
+                        "конфигурирование системы (pgBoucer, Nginx), AAA via SSO. Архитектура БД и серверной части системы. " +
+                        "Разработка интергационных сервисов: CMIS, BPMN2, 1C (WebServices), сервисов общего назначения " +
+                        "(почта, экспорт в pdf, doc, html). Интеграция Alfresco JLAN для online редактирование из браузера " +
+                        "документов MS Office. Maven + plugin development, Ant, Apache Commons, Spring security, " +
+                        "Spring MVC, Tomcat,WSO2, xcmis, OpenCmis, Bonita, Python scripting, Unix shell remote scripting " +
+                        "via ssh tunnels, PL/Python").build();
+        experienceStorage.addOrganisation(RITCenter, RITCenterPosition);
 
-        Experience RITCenter = new Experience();
-        RITCenter.setPlace("RIT Center");
-        RITCenter.setDates(YearMonth.of(2012, 4), YearMonth.of(2014, 10));
-        RITCenter.setTitle("Java архитектор");
-        RITCenter.setDescription("Организация процесса разработки системы ERP для разных окружений: релизная политика, " +
-                "версионирование, ведение CI (Jenkins), миграция базы (кастомизация Flyway), " +
-                "конфигурирование системы (pgBoucer, Nginx), AAA via SSO. Архитектура БД и серверной части системы. " +
-                "Разработка интергационных сервисов: CMIS, BPMN2, 1C (WebServices), сервисов общего назначения " +
-                "(почта, экспорт в pdf, doc, html). Интеграция Alfresco JLAN для online редактирование из браузера " +
-                "документов MS Office. Maven + plugin development, Ant, Apache Commons, Spring security, " +
-                "Spring MVC, Tomcat,WSO2, xcmis, OpenCmis, Bonita, Python scripting, Unix shell remote scripting " +
-                "via ssh tunnels, PL/Python");
-        experienceStorage.addExperience(RITCenter);
+        Organization luxoft = new Organization("Luxoft (Deutsche Bank)");
+        Position luxoftPosition = new Position.Builder().dateFrom(YearMonth.of(2010, 12)).
+                dateTo(YearMonth.of(2012, 4)).title("Ведущий программист").
+                description("Участие в проекте Deutsche Bank CRM (WebLogic, Hibernate, Spring, Spring MVC, SmartGWT, " +
+                        "GWT, Jasper, Oracle). Реализация клиентской и серверной части CRM. " +
+                        "Реализация RIA-приложения для администрирования, мониторинга и анализа результатов " +
+                        "в области алгоритмического трейдинга. JPA, Spring, Spring-MVC, GWT, ExtGWT (GXT), Highstock, " +
+                        "Commet, HTML5.").build();
+        experienceStorage.addOrganisation(luxoft, luxoftPosition);
 
-        Experience luxoft = new Experience();
-        luxoft.setPlace("Luxoft (Deutsche Bank)");
-        luxoft.setDates(YearMonth.of(2010, 12), YearMonth.of(2012, 4));
-        luxoft.setTitle("Ведущий программист");
-        luxoft.setDescription("Участие в проекте Deutsche Bank CRM (WebLogic, Hibernate, Spring, Spring MVC, SmartGWT, " +
-                "GWT, Jasper, Oracle). Реализация клиентской и серверной части CRM. " +
-                "Реализация RIA-приложения для администрирования, мониторинга и анализа результатов " +
-                "в области алгоритмического трейдинга. JPA, Spring, Spring-MVC, GWT, ExtGWT (GXT), Highstock, " +
-                "Commet, HTML5.");
-        experienceStorage.addExperience(luxoft);
+        Organization yota = new Organization("Yota");
+        Position yotaPosition = new Position.Builder().dateFrom(YearMonth.of(2008, 6)).
+                dateTo(YearMonth.of(2010, 12)).title("Ведущий специалист").
+                description("Дизайн и имплементация Java EE фреймворка для отдела \"Платежные Системы\" " +
+                        "(GlassFish v2.1, v3, OC4J, EJB3, JAX-WS RI 2.1, Servlet 2.4, JSP, JMX, JMS, Maven2). " +
+                        "Реализация администрирования, статистики и мониторинга фреймворка. Разработка online JMX клиента " +
+                        "(Python/ Jython, Django, ExtJS)").build();
+        experienceStorage.addOrganisation(yota, yotaPosition);
 
-        Experience yota = new Experience();
-        yota.setPlace("Yota");
-        yota.setDates(YearMonth.of(2008, 6), YearMonth.of(2010, 12));
-        yota.setTitle("Ведущий специалист");
-        yota.setDescription("Дизайн и имплементация Java EE фреймворка для отдела \"Платежные Системы\" " +
-                "(GlassFish v2.1, v3, OC4J, EJB3, JAX-WS RI 2.1, Servlet 2.4, JSP, JMX, JMS, Maven2). " +
-                "Реализация администрирования, статистики и мониторинга фреймворка. Разработка online JMX клиента " +
-                "(Python/ Jython, Django, ExtJS)");
-        experienceStorage.addExperience(yota);
+        Organization enkata = new Organization("Enkata");
+        Position enkataPosition = new Position.Builder().dateFrom(YearMonth.of(2008, 6)).
+                dateTo(YearMonth.of(2010, 12)).title("Разработчик ПО").
+                description("Реализация клиентской (Eclipse RCP) и серверной (JBoss 4.2, Hibernate 3.0, Tomcat, JMS) " +
+                        "частей кластерного J2EE приложения (OLAP, Data mining).").build();
+        experienceStorage.addOrganisation(enkata, enkataPosition);
 
-        Experience enkata = new Experience();
-        enkata.setPlace("Enkata");
-        enkata.setDates(YearMonth.of(2008, 6), YearMonth.of(2010, 12));
-        enkata.setTitle("Разработчик ПО");
-        enkata.setDescription("Реализация клиентской (Eclipse RCP) и серверной (JBoss 4.2, Hibernate 3.0, Tomcat, JMS) " +
-                "частей кластерного J2EE приложения (OLAP, Data mining).");
-        experienceStorage.addExperience(enkata);
+        Organization siemens = new Organization("Siemens AG");
+        Position siemensPosition = new Position.Builder().dateFrom(YearMonth.of(2005, 1)).
+                dateTo(YearMonth.of(2007, 2)).title("Разработчик ПО").
+                description("Разработка информационной модели, проектирование интерфейсов, реализация и отладка ПО " +
+                        "на мобильной IN платформе Siemens @vantage (Java, Unix).").build();
+        experienceStorage.addOrganisation(siemens, siemensPosition);
 
-        Experience siemens = new Experience();
-        siemens.setPlace("Siemens AG");
-        siemens.setDates(YearMonth.of(2005, 1), YearMonth.of(2007, 2));
-        siemens.setTitle("Разработчик ПО");
-        siemens.setDescription("Разработка информационной модели, проектирование интерфейсов, реализация и отладка ПО " +
-                "на мобильной IN платформе Siemens @vantage (Java, Unix).");
-        experienceStorage.addExperience(siemens);
-
-        Experience alcatel = new Experience();
-        alcatel.setPlace("Alcatel");
-        alcatel.setDates(YearMonth.of(1997, 9), YearMonth.of(2005, 1));
-        alcatel.setTitle("Инженер по аппаратному и программному тестированию");
-        alcatel.setDescription("Тестирование, отладка, внедрение ПО цифровой телефонной станции Alcatel 1000 S12 (CHILL, ASM).");
-        experienceStorage.addExperience(alcatel);
-
+        Organization alcatel = new Organization("Alcatel");
+        Position alcatelPosition = new Position.Builder().dateFrom(YearMonth.of(1997, 9)).
+                dateTo(YearMonth.of(2005, 1)).title("Инженер по аппаратному и программному тестированию").
+                description("Тестирование, отладка, внедрение ПО цифровой телефонной станции Alcatel 1000 S12 (CHILL, ASM).").
+                build();
+        experienceStorage.addOrganisation(alcatel, alcatelPosition);
         resume.addSection(EXPERIENCE, experienceStorage);
 
         OrganizationSection educationStorage = new OrganizationSection();
+        Organization coursera = new Organization("Coursera");
+        Position courseraPosition = new Position.Builder().dateFrom(YearMonth.of(2013, 3)).
+                dateTo(YearMonth.of(2013, 5)).title("\"Functional Programming Principles in Scala\" " +
+                "by Martin Odersky").build();
+        educationStorage.addOrganisation(coursera, courseraPosition);
 
-        Experience coursera = new Experience();
-        coursera.setPlace("Coursera");
-        coursera.setDates(YearMonth.of(2013, 3), YearMonth.of(2013, 5));
-        coursera.setTitle("\"Functional Programming Principles in Scala\" by Martin Odersky");
-        educationStorage.addExperience(coursera);
+        Organization luxoftEducation = new Organization("Luxoft");
+        Position luxoftEducationPosition = new Position.Builder().dateFrom(YearMonth.of(2011, 3)).
+                dateTo(YearMonth.of(2011, 4)).title("Курс \"Объектно-ориентированный анализ ИС. " +
+                "Концептуальное моделирование на UML.\"").build();
+        educationStorage.addOrganisation(luxoftEducation, luxoftEducationPosition);
 
-        Experience luxoftEducation = new Experience();
-        luxoftEducation.setPlace("Luxoft");
-        luxoftEducation.setDates(YearMonth.of(2011, 3), YearMonth.of(2011, 4));
-        luxoftEducation.setTitle("Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\"");
-        educationStorage.addExperience(luxoftEducation);
+        Organization siemensEducation = new Organization("Siemens AG");
+        Position siemensEducationPosition = new Position.Builder().dateFrom(YearMonth.of(2005, 1)).
+                dateTo(YearMonth.of(2005, 4)).title("3 месяца обучения мобильным IN сетям (Берлин)").build();
+        educationStorage.addOrganisation(siemensEducation, siemensEducationPosition);
 
-        Experience siemensEducation = new Experience();
-        siemensEducation.setPlace("Siemens AG");
-        siemensEducation.setDates(YearMonth.of(2005, 1), YearMonth.of(2005, 4));
-        siemensEducation.setTitle("3 месяца обучения мобильным IN сетям (Берлин)");
-        educationStorage.addExperience(siemensEducation);
+        Organization alcatelEducation = new Organization("Alcatel");
+        Position alcatelEducationPosition = new Position.Builder().dateFrom(YearMonth.of(1997, 9)).
+                dateTo(YearMonth.of(1998, 3)).title("6 месяцев обучения цифровым телефонным сетям (Москва)").
+                build();
+        educationStorage.addOrganisation(alcatelEducation, alcatelEducationPosition);
 
-        Experience alcatelEducation = new Experience();
-        alcatelEducation.setPlace("Alcatel");
-        alcatelEducation.setDates(YearMonth.of(1997, 9), YearMonth.of(1998, 3));
-        alcatelEducation.setTitle("6 месяцев обучения цифровым телефонным сетям (Москва)");
-        educationStorage.addExperience(alcatelEducation);
+        Organization university = new Organization("Санкт-Петербургский национальный исследовательский " +
+                "университет информационных технологий, механики и оптики");
+        Position universityPosition1 = new Position.Builder().dateFrom(YearMonth.of(1993, 9)).
+                dateTo(YearMonth.of(1996, 7)).title("Аспирантура (программист С, С++)").build();
+        educationStorage.addOrganisation(university, universityPosition1);
 
-        Experience university2 = new Experience();
-        university2.setPlace("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики");
-        university2.setDates(YearMonth.of(1993, 9), YearMonth.of(1996, 7));
-        university2.setTitle("Аспирантура (программист С, С++)");
-        educationStorage.addExperience(university2);
-
-        Experience university1 = new Experience();
-        university1.setPlace("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики");
-        university1.setDates(YearMonth.of(1987, 9), YearMonth.of(1993, 7));
-        university1.setTitle("Инженер (программист Fortran, C)");
-        educationStorage.addExperience(university1);
-
+        Position universityPosition2 = new Position.Builder().dateFrom(YearMonth.of(1987, 9)).
+                dateTo(YearMonth.of(1993, 7)).title("Инженер (программист Fortran, C)").build();
+        educationStorage.addOrganisation(university, universityPosition2);
         resume.addSection(EDUCATION, educationStorage);
 
-
-        System.out.println(resume.getFullName());
-        System.out.println("");
-        for (ContactType type : ContactType.values()) {
-            System.out.print(type.getTitle(type) + " ");
-            System.out.println(resume.getContact(type));
-        }
-        System.out.println("");
-        for (SectionType type : SectionType.values()) {
-            System.out.println("");
-            System.out.println(type);
-            System.out.println("");
-            System.out.println(resume.getSection(type));
-        }
+        return resume;
     }
 }
