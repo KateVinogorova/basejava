@@ -14,7 +14,7 @@ public class Resume {
     private final Map<SectionType, AbstractSection> sections = new EnumMap<>(SectionType.class);
 
     public Resume(String fullName) {
-        this(UUID.randomUUID().toString(), Objects.requireNonNull(fullName, "fullName must not be null"));
+        this(UUID.randomUUID().toString(), fullName);
     }
 
     public Resume(String uuid, String fullName) {

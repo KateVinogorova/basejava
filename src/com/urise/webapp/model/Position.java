@@ -65,4 +65,9 @@ public class Position {
     public int hashCode() {
         return Objects.hash(dateFrom, dateTo, title, description);
     }
+
+    @Override
+    public String toString() {
+        return dateFrom + " - " + dateTo + "\n" + title + "\n" + description;
+    }
 }

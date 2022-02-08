@@ -2,11 +2,11 @@ package com.urise.webapp.model;
 
 import java.util.Objects;
 
-class Link {
+public class Link {
     private final String name;
     private final String url;
 
-    Link(String name, String url) {
+    public Link(String name, String url) {
         Objects.requireNonNull(name, "name must not be null");
         this.name = name;
         this.url = url;
@@ -31,5 +31,10 @@ class Link {
     @Override
     public int hashCode() {
         return Objects.hash(name, url);
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }
