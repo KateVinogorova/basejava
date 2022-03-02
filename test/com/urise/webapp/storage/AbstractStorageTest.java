@@ -8,22 +8,31 @@ import com.urise.webapp.model.Resume;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
 import java.util.Arrays;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
 
 public abstract class AbstractStorageTest {
+    protected static final File STORAGE_DIR = new File("/Users/user/basejava/storage");
     Storage storage;
     private static final String UUID_1 = "uuid1";
-    private static final Resume RESUME_1 = ResumeTestData.createResume(UUID_1, "Otto Octavius");
     private static final String UUID_2 = "uuid2";
-    private static final Resume RESUME_2 = ResumeTestData.createResume(UUID_2, "Norman Osborn");
     private static final String UUID_3 = "uuid3";
-    private static final Resume RESUME_3 = ResumeTestData.createResume(UUID_3, "Peter Parker");
     private static final String UUID_4 = "uuid4";
-    private static final Resume RESUME_4 = ResumeTestData.createResume(UUID_4, "Mary Jane Watson");
+
+    private static final Resume RESUME_1;
+    private static final Resume RESUME_2;
+    private static final Resume RESUME_3;
+    private static final Resume RESUME_4;
+
+    static {
+        RESUME_1 = ResumeTestData.createResume(UUID_1, "Otto Octavius");
+        RESUME_2 = ResumeTestData.createResume(UUID_2, "Norman Osborn");
+        RESUME_3 = ResumeTestData.createResume(UUID_3, "Peter Parker");
+        RESUME_4 = ResumeTestData.createResume(UUID_4, "Mary Jane Watson");
+    }
 
     protected AbstractStorageTest(Storage storage) {
         this.storage = storage;
@@ -67,8 +76,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void getAllSorted() {
-        List<Resume> list = Arrays.asList(RESUME_2, RESUME_1, RESUME_3);
-        assertEquals(list, storage.getAllSorted());
+        assertEquals(Arrays.asList(RESUME_2, RESUME_1, RESUME_3), storage.getAllSorted());
         assertEquals(3, storage.size());
     }
 

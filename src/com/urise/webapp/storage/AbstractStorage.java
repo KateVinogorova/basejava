@@ -33,7 +33,7 @@ abstract class AbstractStorage<SK> implements Storage {
      */
     @Override
     public final void save(Resume resume) {
-        LOG.info("save " + resume);
+//        LOG.info("save " + resume);
         SK searchKey = getKeyNotExist(resume.getUuid());
         saveResume(searchKey, resume);
     }

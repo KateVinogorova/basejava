@@ -1,8 +1,9 @@
 package com.urise.webapp.model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Link {
+public class Link implements Serializable {
     private final String name;
     private final String url;
 
@@ -30,11 +31,13 @@ public class Link {
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, url);
+        int result = name.hashCode();
+        result = 31 * result + (url != null ? url.hashCode() : 0);
+        return result;
     }
 
     @Override
     public String toString() {
-        return name;
+        return "Link(" + name + ',' + url + ')';
     }
 }
