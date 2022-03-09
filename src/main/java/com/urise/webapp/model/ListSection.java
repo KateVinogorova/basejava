@@ -6,7 +6,9 @@ import java.util.List;
 import java.util.Objects;
 
 public class ListSection extends AbstractSection {
-    private final List<String> sectionData;
+    private static final long serialVersionUID = 1L;
+
+    private List<String> sectionData;
 
     public ListSection(){
         sectionData = new ArrayList<>();

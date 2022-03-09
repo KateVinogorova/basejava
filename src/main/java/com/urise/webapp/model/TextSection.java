@@ -5,6 +5,9 @@ import java.util.Objects;
 public class TextSection extends AbstractSection {
     private String description;
 
+    public TextSection() {
+    }
+
     public TextSection(String description) {
         Objects.requireNonNull(description, "description must not be null");
         this.description = description;

@@ -80,16 +80,16 @@ public class ResumeTestData {
         OrganizationSection experienceStorage = new OrganizationSection();
         Position javaOnlineProjectsPosition = new Position(DateUtil.of(2013, OCTOBER), LocalDate.now(),
                 "Автор проекта.", "Создание, организация и проведение " +
-                        "Java онлайн проектов и стажировок.");
+                "Java онлайн проектов и стажировок.");
         Organization javaOnlineProjects = new Organization("Java Online Projects", null, javaOnlineProjectsPosition);
-        experienceStorage.addOrganisation(javaOnlineProjects);
+        experienceStorage.setOrganisation(javaOnlineProjects);
 
         Position wrikePosition = new Position(DateUtil.of(2014, OCTOBER), DateUtil.of(2016, JANUARY),
                 "Старший разработчик (backend)", "Проектирование и разработка онлайн платформы " +
                 "управления проектами Wrike (Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). " +
                 "Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.");
         Organization wrike = new Organization("Wrike", null, wrikePosition);
-        experienceStorage.addOrganisation(wrike);
+        experienceStorage.setOrganisation(wrike);
 
         Position RITCenterPosition = new Position(DateUtil.of(2012, APRIL), DateUtil.of(2014, OCTOBER),
                 "Java архитектор", "Организация процесса разработки системы ERP для разных окружений: " +
@@ -101,7 +101,7 @@ public class ResumeTestData {
                 "Spring MVC, Tomcat,WSO2, xcmis, OpenCmis, Bonita, Python scripting, Unix shell remote scripting " +
                 "via ssh tunnels, PL/Python");
         Organization RITCenter = new Organization("RIT Center", null, RITCenterPosition);
-        experienceStorage.addOrganisation(RITCenter);
+        experienceStorage.setOrganisation(RITCenter);
 
         Position luxoftPosition = new Position(DateUtil.of(2010, DECEMBER), DateUtil.of(2012, APRIL),
                 "Ведущий программист", "Участие в проекте Deutsche Bank CRM (WebLogic, Hibernate, Spring, Spring MVC, SmartGWT, " +
@@ -110,7 +110,7 @@ public class ResumeTestData {
                 "в области алгоритмического трейдинга. JPA, Spring, Spring-MVC, GWT, ExtGWT (GXT), Highstock, " +
                 "Commet, HTML5.");
         Organization luxoft = new Organization("Luxoft (Deutsche Bank)", null, luxoftPosition);
-        experienceStorage.addOrganisation(luxoft);
+        experienceStorage.setOrganisation(luxoft);
 
         Position yotaPosition = new Position(DateUtil.of(2008, JUNE), DateUtil.of(2010, DECEMBER),
                 "Ведущий специалист", "Дизайн и имплементация Java EE фреймворка для отдела \"Платежные " +
@@ -118,47 +118,47 @@ public class ResumeTestData {
                 "Реализация администрирования, статистики и мониторинга фреймворка. Разработка online JMX клиента " +
                 "(Python/ Jython, Django, ExtJS)");
         Organization yota = new Organization("Yota", null, yotaPosition);
-        experienceStorage.addOrganisation(yota);
+        experienceStorage.setOrganisation(yota);
 
         Position enkataPosition = new Position(DateUtil.of(2007, MARCH), DateUtil.of(2008, JUNE),
                 "Разработчик ПО", "Реализация клиентской (Eclipse RCP) и серверной (JBoss 4.2, " +
                 "Hibernate 3.0, Tomcat, JMS) частей кластерного J2EE приложения (OLAP, Data mining).");
         Organization enkata = new Organization("Enkata", null, enkataPosition);
-        experienceStorage.addOrganisation(enkata);
+        experienceStorage.setOrganisation(enkata);
 
         Position siemensPosition = new Position(DateUtil.of(2005, JANUARY), DateUtil.of(2007, FEBRUARY),
                 "Разработчик ПО", "Разработка информационной модели, проектирование интерфейсов, " +
                 "реализация и отладка ПО на мобильной IN платформе Siemens @vantage (Java, Unix).");
         Organization siemens = new Organization("Siemens AG", null, siemensPosition);
-        experienceStorage.addOrganisation(siemens);
+        experienceStorage.setOrganisation(siemens);
 
         Position alcatelPosition = new Position(DateUtil.of(1997, SEPTEMBER), DateUtil.of(2005, JANUARY),
                 "Инженер по аппаратному и программному тестированию", "Тестирование, отладка, внедрение " +
                 "ПО цифровой телефонной станции Alcatel 1000 S12 (CHILL, ASM).");
         Organization alcatel = new Organization("Alcatel", null, alcatelPosition);
-        experienceStorage.addOrganisation(alcatel);
+        experienceStorage.setOrganisation(alcatel);
         resume.addSection(EXPERIENCE, experienceStorage);
 
         OrganizationSection educationStorage = new OrganizationSection();
         Position courseraPosition = new Position(DateUtil.of(2013, MARCH), DateUtil.of(2013, MAY),
                 "\"Functional Programming Principles in Scala\" by Martin Odersky", null);
         Organization coursera = new Organization("Coursera", null, courseraPosition);
-        educationStorage.addOrganisation(coursera);
+        educationStorage.setOrganisation(coursera);
 
         Position luxoftEducationPosition = new Position(DateUtil.of(2011, MARCH), DateUtil.of(2011, APRIL),
                 "Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\"", null);
         Organization luxoftEducation = new Organization("Luxoft", null, luxoftEducationPosition);
-        educationStorage.addOrganisation(luxoftEducation);
+        educationStorage.setOrganisation(luxoftEducation);
 
         Position siemensEducationPosition = new Position(DateUtil.of(2005, JANUARY), DateUtil.of(2005, APRIL),
                 "3 месяца обучения мобильным IN сетям (Берлин)", null);
         Organization siemensEducation = new Organization("Siemens AG", null, siemensEducationPosition);
-        educationStorage.addOrganisation(siemensEducation);
+        educationStorage.setOrganisation(siemensEducation);
 
         Position alcatelEducationPosition = new Position(DateUtil.of(1997, SEPTEMBER), DateUtil.of(1998, MARCH),
                 "6 месяцев обучения цифровым телефонным сетям (Москва)", null);
         Organization alcatelEducation = new Organization("Alcatel", null, alcatelEducationPosition);
-        educationStorage.addOrganisation(alcatelEducation);
+        educationStorage.setOrganisation(alcatelEducation);
 
         Position universityPosition1 = new Position(DateUtil.of(1993, SEPTEMBER), DateUtil.of(1996, JULY),
                 "Аспирантура (программист С, С++)", null);

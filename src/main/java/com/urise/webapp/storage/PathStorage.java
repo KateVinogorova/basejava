@@ -1,12 +1,14 @@
 package com.urise.webapp.storage;
 
+import com.urise.webapp.exception.ExistStorageException;
 import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
-import com.urise.webapp.storage.serializer.SerializationMethod;
+import com.urise.webapp.storage.serializer.StreamSerializer;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -17,9 +19,9 @@ import java.util.stream.Stream;
 
 public class PathStorage extends AbstractStorage<Path> {
     private final Path path;
-    private final SerializationMethod serializationMethod;
+    private final StreamSerializer serializationMethod;
 
-    PathStorage(String dir, SerializationMethod serializationMethod) {
+    PathStorage(String dir, StreamSerializer serializationMethod) {
         Objects.requireNonNull(dir, "directory must not be null");
         path = Paths.get(dir);
         this.serializationMethod = serializationMethod;
@@ -31,7 +33,7 @@ public class PathStorage extends AbstractStorage<Path> {
     @Override
     protected void updateResume(Path searchKey, Resume resume) {
         try {
-            serializationMethod.doWrite(resume, new BufferedOutputStream(Files.newOutputStream(path)));
+            serializationMethod.doWrite(resume, new BufferedOutputStream(Files.newOutputStream(searchKey)));
         } catch (IOException ioException) {
             throw new StorageException("Path write error", resume.getUuid(), ioException);
         }
@@ -40,7 +42,9 @@ public class PathStorage extends AbstractStorage<Path> {
     @Override
     protected void saveResume(Path searchKey, Resume resume) {
         try {
-            Files.createFile(path);
+            Files.createFile(searchKey);
+        } catch (FileAlreadyExistsException e) {
+            throw new ExistStorageException(resume.getUuid());
         } catch (IOException ioException) {
             throw new StorageException("Couldn't create path " + path, getFileName(path), ioException);
         }
@@ -72,7 +76,7 @@ public class PathStorage extends AbstractStorage<Path> {
 
     @Override
     protected boolean isExist(Path searchKey) {
-        return Files.isRegularFile(path);
+        return Files.isRegularFile(searchKey);
     }
 
     @Override
