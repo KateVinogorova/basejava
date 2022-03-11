@@ -42,6 +42,14 @@ public class Organization implements Serializable {
                 Objects.equals(positionList, that.positionList);
     }
 
+    public Link getLink() {
+        return link;
+    }
+
+    public List<Position> getPositionList() {
+        return positionList;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(positionList, link);

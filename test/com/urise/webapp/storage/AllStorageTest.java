@@ -5,7 +5,8 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses(
-        {ArrayStorageTest.class,
+        {
+                ArrayStorageTest.class,
                 ListStorageTest.class,
                 MapResumeStorageTest.class,
                 MapUuidStorageTest.class,
@@ -14,7 +15,8 @@ import org.junit.runners.Suite;
                 PathStorageTest.class,
                 XMLPathStorageTest.class,
                 JSONPathStorageTest.class,
-                DataPathStorageTest.class}
+                DataPathStorageTest.class
+        }
 )
 
 public class AllStorageTest {

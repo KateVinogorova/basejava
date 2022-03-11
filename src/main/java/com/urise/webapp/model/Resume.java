@@ -16,7 +16,7 @@ import java.util.UUID;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Resume implements Comparable<Resume>, Serializable {
 
-    private final long SerialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
     private String uuid;
     private String fullName;
@@ -49,18 +49,16 @@ public class Resume implements Comparable<Resume>, Serializable {
         contacts.put(type, value);
     }
 
-    public String getContact(ContactType type) {
-        return contacts.get(type);
+    public Map<ContactType, String> getContacts() {
+        return contacts;
     }
-
-    public Map<ContactType, String> getContacts() {return contacts;}
 
     public void addSection(SectionType type, AbstractSection section) {
         sections.put(type, section);
     }
 
-    public AbstractSection getSection(SectionType type) {
-        return sections.get(type);
+    public Map<SectionType, AbstractSection> getSections() {
+        return sections;
     }
 
     @Override

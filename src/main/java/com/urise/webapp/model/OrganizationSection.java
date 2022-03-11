@@ -10,7 +10,7 @@ import java.util.Objects;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class OrganizationSection extends AbstractSection {
 
-    private List<Organization> organizations;
+    private final List<Organization> organizations;
 
     public OrganizationSection() {
         organizations = new ArrayList<>();
