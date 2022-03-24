@@ -8,9 +8,9 @@ import java.util.Objects;
 public class ListSection extends AbstractSection {
     private static final long serialVersionUID = 1L;
 
-    private List<String> sectionData;
+    private final List<String> sectionData;
 
-    public ListSection(){
+    public ListSection() {
         sectionData = new ArrayList<>();
     }
 
@@ -45,9 +45,7 @@ public class ListSection extends AbstractSection {
         if (o == null || getClass() != o.getClass()) return false;
 
         ListSection that = (ListSection) o;
-
         return sectionData.equals(that.sectionData);
-
     }
 
     @Override

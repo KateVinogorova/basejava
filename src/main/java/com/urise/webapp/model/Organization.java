@@ -17,6 +17,7 @@ import static com.urise.webapp.util.DateUtil.of;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Organization implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     private Link link;
     private List<Position> positionList;
@@ -33,6 +34,14 @@ public class Organization implements Serializable {
         this.positionList = positionList;
     }
 
+    public Link getLink() {
+        return link;
+    }
+
+    public List<Position> getPositionList() {
+        return positionList;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -40,14 +49,6 @@ public class Organization implements Serializable {
         Organization that = (Organization) o;
         return Objects.equals(link, that.link) &&
                 Objects.equals(positionList, that.positionList);
-    }
-
-    public Link getLink() {
-        return link;
-    }
-
-    public List<Position> getPositionList() {
-        return positionList;
     }
 
     @Override
@@ -66,6 +67,7 @@ public class Organization implements Serializable {
 
     @XmlAccessorType(XmlAccessType.FIELD)
     public static class Position implements Serializable {
+
         @XmlJavaTypeAdapter(LocalDateAdapter.class)
         private LocalDate startDate;
         @XmlJavaTypeAdapter(LocalDateAdapter.class)
@@ -91,7 +93,7 @@ public class Organization implements Serializable {
             this.startDate = startDate;
             this.endDate = endDate;
             this.title = title;
-            this.description = description;
+            this.description = description == null ? "" : description;
         }
 
         public LocalDate getStartDate() {
@@ -115,10 +117,12 @@ public class Organization implements Serializable {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             Position position = (Position) o;
-            return Objects.equals(startDate, position.startDate) &&
-                    Objects.equals(endDate, position.endDate) &&
-                    Objects.equals(title, position.title) &&
-                    Objects.equals(description, position.description);
+            boolean dateBoolean = Objects.equals(startDate, position.startDate);
+            boolean date2Boolean = Objects.equals(endDate, position.endDate);
+            boolean titleBoolean = Objects.equals(title, position.title);
+            boolean descBoolean = Objects.equals(description, position.description);
+
+            return dateBoolean && date2Boolean && titleBoolean &&descBoolean;
         }
 
         @Override

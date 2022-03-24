@@ -3,6 +3,8 @@ package com.urise.webapp.model;
 import java.util.Objects;
 
 public class TextSection extends AbstractSection {
+    private static final long serialVersionUID = 1L;
+
     private String description;
 
     public TextSection() {
@@ -26,11 +28,8 @@ public class TextSection extends AbstractSection {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         TextSection that = (TextSection) o;
-
         return description.equals(that.description);
-
     }
 
     @Override
