@@ -2,18 +2,20 @@ package com.urise.webapp;
 
 import com.urise.webapp.model.Resume;
 
+import static com.urise.webapp.model.ContactType.*;
+
 public class ResumeTestData {
 
     public static Resume createResume(String uuid, String fullName) {
         Resume resume = new Resume(uuid, fullName);
 
-//        resume.addContact(PHONE, "+7(921) 855-0482");
-//        resume.addContact(SKYPE, "grigory.kislin");
-//        resume.addContact(MAIL, "gkislin@yandex.ru");
-//        resume.addContact(LINKEDIN, "");
-//        resume.addContact(GITHUB, "");
-//        resume.addContact(STACKOVERFLOW, "");
-//        resume.addContact(HOME_PAGE, "");
+        resume.addContact(PHONE, "+7(921) 855-0482");
+        resume.addContact(SKYPE, "grigory.kislin");
+        resume.addContact(MAIL, "gkislin@yandex.ru");
+        resume.addContact(LINKEDIN, "");
+        resume.addContact(GITHUB, "");
+        resume.addContact(STACKOVERFLOW, "");
+        resume.addContact(HOME_PAGE, "");
 //
 //        TextSection objective = new TextSection("Ведущий стажировок и корпоративного обучения по Java Web " +
 //                "и Enterprise технологиям");
